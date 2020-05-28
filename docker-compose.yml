@@ -1,0 +1,36 @@
+version: "3.8"
+services:
+  postgres:
+    image: postgres:12
+    environment:
+      POSTGRES_PASSWORD: password
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d
+    restart: always
+  zookeeper:
+    image: zookeeper:3.6.1
+    restart: always
+  kafka:
+    image: wurstmeister/kafka:2.12-2.5.0
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "false"
+      KAFKA_CREATE_TOPICS: "registration:1:1,availability:1:1"
+      KAFKA_LOG_RETENTION_MS: 900000
+    restart: always
+  registration:
+    image: sparqlmon/registration
+    ports:
+      - 8080:8080
+    restart: always
+  availability:
+    image: sparqlmon/availability
+    ports:
+      - 8081:8080
+    restart: always
+  status:
+    image: sparqlmon/status
+    ports:
+      - 8082:8080
+    restart: always
