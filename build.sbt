@@ -44,7 +44,7 @@ val compilerOptions = Seq(
 )
 
 lazy val root = (project in file("."))
-  .aggregate(model, registration, availability, status)
+  .aggregate(model, registration, availability, status, alerting)
 
 lazy val model = (project in file("model"))
   .settings(
@@ -116,3 +116,7 @@ lazy val status = (project in file("status"))
     testFrameworks += new TestFramework("munit.Framework")
   )
   .dependsOn(model)
+
+lazy val alerting = (project in file("alerting"))
+  .enablePlugins(JavaAppPackaging)
+  .settings(scalacOptions ++= compilerOptions)

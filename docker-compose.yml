@@ -42,3 +42,6 @@ services:
     ports:
       - 8082:8080
     restart: always
+  alerting:
+    image: sparqlmon/alerting
+    restart: always

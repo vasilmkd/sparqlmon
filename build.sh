@@ -17,3 +17,5 @@ buildImage registration
 buildImage availability
 
 buildImage status
+
+buildImage alerting
