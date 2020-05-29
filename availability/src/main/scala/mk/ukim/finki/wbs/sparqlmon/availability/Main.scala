@@ -56,17 +56,20 @@ object Main extends IOApp {
             ProducerSettings[IO, String, EndpointAvailability].withBootstrapServers("kafka:9092")
           )
 
-          consumerStream(consumerSettings)
-            .evalTap(_.subscribeTo("registration"))
-            .flatMap(_.stream)
-            .parEvalMap(8) { commitable =>
-              RegistrationProcessor
-                .processEndpoint[IO](commitable.record.value)
-                .as(commitable.offset)
-            }
-            .through(commitBatchWithin(100, 15.seconds))
-            .compile
-            .drain
+          for {
+            cpus <- IO(Runtime.getRuntime().availableProcessors())
+            _    <- consumerStream(consumerSettings)
+                   .evalTap(_.subscribeTo("registration"))
+                   .flatMap(_.stream)
+                   .parEvalMap(cpus) { commitable =>
+                     RegistrationProcessor
+                       .processEndpoint[IO](commitable.record.value)
+                       .as(commitable.offset)
+                   }
+                   .through(commitBatchWithin(100, 15.seconds))
+                   .compile
+                   .drain
+          } yield ()
       }
       .as(ExitCode.Success)
 }

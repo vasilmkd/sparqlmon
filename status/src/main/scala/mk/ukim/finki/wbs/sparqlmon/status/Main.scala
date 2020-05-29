@@ -43,17 +43,20 @@ object Main extends IOApp {
           .map(_ => sr)
       }
       .use { implicit sr =>
-        consumerStream(consumerSettings)
-          .evalTap(_.subscribeTo("availability"))
-          .flatMap(_.stream)
-          .parEvalMap(8) { commitable =>
-            AvailabilityProcessor
-              .processEndpointAvailability[IO](commitable.record.value)
-              .as(commitable.offset)
-          }
-          .through(commitBatchWithin(100, 15.seconds))
-          .compile
-          .drain
+        for {
+          cpus <- IO(Runtime.getRuntime().availableProcessors())
+          _    <- consumerStream(consumerSettings)
+                 .evalTap(_.subscribeTo("availability"))
+                 .flatMap(_.stream)
+                 .parEvalMap(cpus) { commitable =>
+                   AvailabilityProcessor
+                     .processEndpointAvailability[IO](commitable.record.value)
+                     .as(commitable.offset)
+                 }
+                 .through(commitBatchWithin(100, 15.seconds))
+                 .compile
+                 .drain
+        } yield ()
       }
       .as(ExitCode.Success)
 }

@@ -119,4 +119,13 @@ lazy val status = (project in file("status"))
   .dependsOn(model)
 
 lazy val alerting = (project in file("alerting"))
-  .settings(scalacOptions ++= compilerOptions, test in assembly := {})
+  .settings(
+    scalacOptions ++= compilerOptions,
+    test in assembly := {},
+    libraryDependencies ++= Seq(
+      "org.slf4j"      % "slf4j-simple" % "1.7.30",
+      "org.scalameta" %% "munit"        % "0.7.7" % Test
+    ),
+    testFrameworks += new TestFramework("munit.Framework")
+  )
+  .dependsOn(model)

@@ -44,4 +44,6 @@ services:
     restart: always
   alerting:
     image: sparqlmon/alerting
+    environment:
+      SPARQLMON_PASSWORD: ${SPARQLMON_PASSWORD}
     restart: always
