@@ -43,7 +43,7 @@ val compilerOptions = Seq(
   "-Ywarn-value-discard"           // Warn when non-Unit expression results are unused.
 )
 
-lazy val root = (project in file("."))
+lazy val sparqlmon = (project in file("."))
   .aggregate(model, registration, availability, status, alerting)
 
 lazy val model = (project in file("model"))
