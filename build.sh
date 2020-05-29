@@ -9,11 +9,8 @@ function buildImage () {
 }
 
 sbt clean assembly
-
 buildImage registration
-
 buildImage availability
-
 buildImage status
-
 buildImage alerting
+buildImage gateway

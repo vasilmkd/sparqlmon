@@ -8,7 +8,6 @@ import doobie.hikari.HikariTransactor
 import fs2.kafka._
 import org.http4s.implicits._
 import org.http4s.server.blaze.BlazeServerBuilder
-import org.http4s.server.middleware._
 
 import mk.ukim.finki.wbs.sparqlmon.model._
 
@@ -38,7 +37,7 @@ object Main extends IOApp {
       .flatMap { implicit sr =>
         BlazeServerBuilder[IO](ExecutionContext.global)
           .bindHttp(8080, "0.0.0.0")
-          .withHttpApp(CORS(new Service[IO].routes).orNotFound)
+          .withHttpApp(new Service[IO].routes.orNotFound)
           .resource
           .map(_ => sr)
       }

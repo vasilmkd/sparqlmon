@@ -9,7 +9,6 @@ import fs2.kafka._
 import org.http4s.client.blaze.BlazeClientBuilder
 import org.http4s.implicits._
 import org.http4s.server.blaze.BlazeServerBuilder
-import org.http4s.server.middleware._
 
 import mk.ukim.finki.wbs.sparqlmon.model._
 
@@ -44,7 +43,7 @@ object Main extends IOApp {
           implicit val iar = ar
           BlazeServerBuilder[IO](ExecutionContext.global)
             .bindHttp(8080, "0.0.0.0")
-            .withHttpApp(CORS(new Service[IO].routes).orNotFound)
+            .withHttpApp(new Service[IO].routes.orNotFound)
             .resource
             .map(_ => (iar, client))
       }

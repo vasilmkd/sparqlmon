@@ -44,7 +44,7 @@ val compilerOptions = Seq(
 )
 
 lazy val sparqlmon = (project in file("."))
-  .aggregate(model, registration, availability, status, alerting)
+  .aggregate(model, registration, availability, status, alerting, gateway)
 
 lazy val model = (project in file("model"))
   .settings(
@@ -127,5 +127,18 @@ lazy val alerting = (project in file("alerting"))
       "org.scalameta" %% "munit"        % "0.7.7" % Test
     ),
     testFrameworks += new TestFramework("munit.Framework")
+  )
+  .dependsOn(model)
+
+lazy val gateway = (project in file("gateway"))
+  .settings(
+    scalacOptions ++= compilerOptions,
+    test in assembly := {},
+    libraryDependencies ++= Seq(
+      "org.http4s" %% "http4s-blaze-server" % "0.21.4",
+      "org.http4s" %% "http4s-blaze-client" % "0.21.4",
+      "org.http4s" %% "http4s-dsl"          % "0.21.4",
+      "org.slf4j"   % "slf4j-simple"        % "1.7.30"
+    )
   )
   .dependsOn(model)

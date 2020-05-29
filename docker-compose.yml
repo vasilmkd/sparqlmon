@@ -25,25 +25,24 @@ services:
     image: sparqlmon/registration
     environment:
       SPARQLMON_PASSWORD: ${SPARQLMON_PASSWORD}
-    ports:
-      - 8080:8080
     restart: always
   availability:
     image: sparqlmon/availability
     environment:
       SPARQLMON_PASSWORD: ${SPARQLMON_PASSWORD}
-    ports:
-      - 8081:8080
     restart: always
   status:
     image: sparqlmon/status
     environment:
       SPARQLMON_PASSWORD: ${SPARQLMON_PASSWORD}
-    ports:
-      - 8082:8080
     restart: always
   alerting:
     image: sparqlmon/alerting
     environment:
       SPARQLMON_PASSWORD: ${SPARQLMON_PASSWORD}
+    restart: always
+  gateway:
+    image: sparqlmon/gateway
+    ports:
+      - 8080:8080
     restart: always
