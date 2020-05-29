@@ -19,8 +19,8 @@ class PostgresStatusRepository[F[_]: Async](xa: Transactor[F]) extends StatusRep
       .transact(xa)
       .void
 
-  override def status(ep: Endpoint): F[Option[AvailabilityRecord]] =
-    sql"select instant, up from status where url = ${ep.url.toString}"
+  override def status(url: URL): F[Option[AvailabilityRecord]] =
+    sql"select instant, up from status where url = ${url.toString}"
       .query[(Instant, Boolean)]
       .stream
       .map(t => AvailabilityRecord(t._1, t._2))

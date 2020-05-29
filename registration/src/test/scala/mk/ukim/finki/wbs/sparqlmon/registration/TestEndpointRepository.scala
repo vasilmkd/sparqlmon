@@ -1,6 +1,7 @@
 package mk.ukim.finki.wbs.sparqlmon.registration
 
 import java.net.URL
+import javax.mail.internet.InternetAddress
 
 import cats.Applicative
 import fs2.Stream
@@ -20,11 +21,11 @@ class TestEndpointRepository[F[_]: Applicative] extends EndpointRepository[F] {
 
 object TestEndpointRepository {
   val testEndpoint: Endpoint =
-    Endpoint(new URL("http://dbpedia.org/sparql"))
+    Endpoint(new URL("http://dbpedia.org/sparql"), new InternetAddress("someone@dbpedia.org"))
 
   val testEndpoints: Set[Endpoint] =
     Set(
       testEndpoint,
-      Endpoint(new URL("https://query.wikidata.org/sparql"))
+      Endpoint(new URL("https://query.wikidata.org/sparql"), new InternetAddress("someone@wikidata.org"))
     )
 }

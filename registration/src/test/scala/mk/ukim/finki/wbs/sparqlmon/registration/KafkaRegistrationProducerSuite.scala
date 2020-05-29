@@ -1,6 +1,7 @@
 package mk.ukim.finki.wbs.sparqlmon.registration
 
 import java.net.URL
+import javax.mail.internet.InternetAddress
 
 import scala.concurrent.ExecutionContext
 
@@ -29,7 +30,7 @@ class KafkaRegistrationProducerSuite extends FunSuite {
     .withGroupId("testregistration")
 
   test("produceOne") {
-    val expected = Endpoint(new URL("http://dbpedia.org/sparql"))
+    val expected = Endpoint(new URL("http://dbpedia.org/sparql"), new InternetAddress("someone@dbpedia.org"))
     val test     = for {
       _        <- rp.produceOne(expected)
       endpoint <- consumerStream(cs)

@@ -1,6 +1,7 @@
 package mk.ukim.finki.wbs.sparqlmon.registration
 
 import java.net.URL
+import javax.mail.internet.InternetAddress
 
 import scala.concurrent.ExecutionContext
 
@@ -42,8 +43,8 @@ class PostgresEndpointRepositorySuite extends FunSuite {
 
   test("insert and read test") {
     val expected = Set(
-      Endpoint(new URL("http://dbpedia.org/sparql")),
-      Endpoint(new URL("https://query.wikidata.org/sparql"))
+      Endpoint(new URL("http://dbpedia.org/sparql"), new InternetAddress("someone@dbpedia.org")),
+      Endpoint(new URL("https://query.wikidata.org/sparql"), new InternetAddress("someone@wikidata.org"))
     )
 
     val test = repo.use { repo =>
@@ -57,7 +58,7 @@ class PostgresEndpointRepositorySuite extends FunSuite {
 
   test("insert duplicate") {
     val url  = new URL("http://dbpedia.org/sparql")
-    val test = repo.use(_.register(Endpoint(url)))
+    val test = repo.use(_.register(Endpoint(url, new InternetAddress("someone@dbpedia.org"))))
     assertEquals(test.unsafeRunSync(), Left(Error.EndpointAlreadyRegistered(url)))
   }
 }

@@ -12,7 +12,7 @@ object RegistrationProcessor {
   ): F[Unit] =
     for {
       record <- AvailabilityChecker.checkAvailability(ep)
-      _      <- AvailabilityRepository[F].recordAvailability(ep, record)
+      _      <- AvailabilityRepository[F].recordAvailability(ep.url, record)
       _      <- AvailabilityProducer[F].produceOne(EndpointAvailability(ep, record))
     } yield ()
 }

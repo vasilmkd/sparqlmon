@@ -4,6 +4,7 @@ import scala.concurrent.ExecutionContext
 
 import java.net.URL
 import java.time.Instant
+import javax.mail.internet.InternetAddress
 
 import cats.effect.IO
 import fs2.kafka._
@@ -29,7 +30,10 @@ class KafkaAvailabilityProducerSuite extends FunSuite {
 
   test("produceOne") {
     val expected =
-      EndpointAvailability(Endpoint(new URL("http://dbpedia.org/sparql")), AvailabilityRecord(Instant.EPOCH, true))
+      EndpointAvailability(
+        Endpoint(new URL("http://dbpedia.org/sparql"), new InternetAddress("someone@dbpedia.org")),
+        AvailabilityRecord(Instant.EPOCH, true)
+      )
     val test     = for {
       _  <- ap.produceOne(expected)
       ea <- consumerStream(cs)

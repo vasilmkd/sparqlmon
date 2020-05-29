@@ -3,6 +3,7 @@ package mk.ukim.finki.wbs.sparqlmon.availability
 import scala.concurrent.duration._
 
 import java.net.URL
+import javax.mail.internet.InternetAddress
 
 import cats.data.OptionT
 import cats.effect.{ Clock, IO, Timer }
@@ -13,7 +14,7 @@ import mk.ukim.finki.wbs.sparqlmon.model._
 
 class AvailabilityCheckerSuite extends FunSuite {
 
-  private val endpoint = Endpoint(new URL("http://dbpedia.org/sparql"))
+  private val endpoint = Endpoint(new URL("http://dbpedia.org/sparql"), new InternetAddress("someone@dbpedia.org"))
 
   implicit private val timer = new Timer[IO] {
     def clock: Clock[IO]                          =

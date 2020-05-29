@@ -19,9 +19,9 @@ class Service[F[_]: Sync: AvailabilityRepository] extends Http4sDsl[F] {
   val routes: HttpRoutes[F] = HttpRoutes.of[F] {
     case GET -> Root / "availability" :? UrlParamDecoderMatcher(url) =>
       (for {
-        ep      <- Sync[F].delay(Endpoint(new URL(url)))
-        history <- AvailabilityRepository[F].availability(ep)
-        res     <- Ok(Availability(ep.url, history).asJson)
+        url     <- Sync[F].delay(new URL(url))
+        history <- AvailabilityRepository[F].availability(url)
+        res     <- Ok(Availability(url, history).asJson)
       } yield res)
         .recoverWith {
           case _: MalformedURLException =>

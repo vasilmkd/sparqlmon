@@ -39,7 +39,7 @@ class PostgresAvailabilityRepositorySuite extends FunSuite {
       .unsafeRunSync()
 
   test("insert and read test") {
-    val endpoint = Endpoint(new URL("http://dbpedia.org/sparql"))
+    val endpoint = new URL("http://dbpedia.org/sparql")
 
     val expected = Vector(
       AvailabilityRecord(Instant.ofEpochMilli(1), true),

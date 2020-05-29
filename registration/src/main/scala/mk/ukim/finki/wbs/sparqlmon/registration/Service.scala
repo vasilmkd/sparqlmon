@@ -1,5 +1,6 @@
 package mk.ukim.finki.wbs.sparqlmon.registration
 
+import cats.Applicative
 import cats.data.EitherT
 import cats.effect.Sync
 import cats.implicits._
@@ -44,9 +45,16 @@ class Service[F[_]: Sync: EndpointChecker: EndpointRepository: RegistrationProdu
     EitherT {
       req
         .as[Endpoint]
-        .redeem(
-          _ => Error.MalformedRegistrationRequest.asLeft[Endpoint],
-          Right(_)
+        .redeemWith(
+          _ => Applicative[F].pure(Left(Error.MalformedRegistrationRequest)),
+          ep =>
+            Sync[F]
+              .delay(ep.email.validate())
+              .as(ep)
+              .redeem(
+                _ => Error.MalformedRegistrationRequest.asLeft[Endpoint],
+                Right(_)
+              )
         )
     }
 }

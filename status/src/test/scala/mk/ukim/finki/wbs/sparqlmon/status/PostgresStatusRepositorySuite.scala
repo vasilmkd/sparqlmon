@@ -2,6 +2,7 @@ package mk.ukim.finki.wbs.sparqlmon.status
 
 import java.net.URL
 import java.time.Instant
+import javax.mail.internet.InternetAddress
 
 import scala.concurrent.ExecutionContext
 
@@ -39,7 +40,7 @@ class PostgresStatusRepositorySuite extends FunSuite {
 
   test("insert and read test") {
     val expected = EndpointAvailability(
-      Endpoint(new URL("http://dbpedia.org/sparql")),
+      Endpoint(new URL("http://dbpedia.org/sparql"), new InternetAddress("someone@dbpedia.org")),
       AvailabilityRecord(
         Instant.ofEpochMilli(1),
         true
@@ -49,7 +50,7 @@ class PostgresStatusRepositorySuite extends FunSuite {
     val test = repo.use { repo =>
       for {
         _        <- repo.update(expected)
-        status   <- repo.status(expected.endpoint)
+        status   <- repo.status(expected.endpoint.url)
         overview <- repo.overview
         _        <- IO(assertEquals(status, Some(expected.record)))
       } yield assertEquals(overview, Vector(Status(expected.endpoint.url, Some(expected.record))))

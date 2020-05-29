@@ -2,6 +2,7 @@ package mk.ukim.finki.wbs.sparqlmon.registration
 
 import java.net.URL
 import java.time.Instant
+import javax.mail.internet.InternetAddress
 
 import scala.concurrent.duration.MILLISECONDS
 
@@ -18,10 +19,10 @@ import mk.ukim.finki.wbs.sparqlmon.model._
 class PostgresEndpointRepository[F[_]: Async: ContextShift: Timer](xa: Transactor[F]) extends EndpointRepository[F] {
 
   override def endpointsStream: Stream[F, Endpoint] =
-    sql"select url from endpoint"
-      .query[String]
+    sql"select url, email from endpoint"
+      .query[(String, String)]
       .stream
-      .map(s => Endpoint(new URL(s)))
+      .map(t => Endpoint(new URL(t._1), new InternetAddress(t._2)))
       .transact(xa)
 
   override def endpoints: F[Set[Endpoint]] =
@@ -31,13 +32,13 @@ class PostgresEndpointRepository[F[_]: Async: ContextShift: Timer](xa: Transacto
   override def register(ep: Endpoint): F[Either[Error, Unit]] =
     for {
       timestamp <- Timer[F].clock.realTime(MILLISECONDS)
-      res       <-
-        sql"insert into endpoint (url, registered) values (${ep.url.toString}, ${Instant.ofEpochMilli(timestamp)})".update.run
-          .transact(xa)
-          .as(Either.right[Error, Unit](()))
-          .recoverWith {
-            case e: PSQLException if e.getMessage.contains("duplicate key value violates unique constraint") =>
-              Applicative[F].pure(Either.left[Error, Unit](Error.EndpointAlreadyRegistered(ep.url)))
-          }
+      res       <- sql"insert into endpoint (url, registered, email) values (${ep.url.toString}, ${Instant
+               .ofEpochMilli(timestamp)}, ${ep.email.toString})".update.run
+               .transact(xa)
+               .as(Either.right[Error, Unit](()))
+               .recoverWith {
+                 case e: PSQLException if e.getMessage.contains("duplicate key value violates unique constraint") =>
+                   Applicative[F].pure(Either.left[Error, Unit](Error.EndpointAlreadyRegistered(ep.url)))
+               }
     } yield res
 }

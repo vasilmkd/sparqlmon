@@ -59,6 +59,36 @@ class ServiceSuite extends FunSuite {
     test.unsafeRunSync()
   }
 
+  test("malformed url") {
+    implicit val ioRepository           = new TestEndpointRepository[IO]
+    implicit val ioRegistrationProducer = new TestRegistrationProducer[IO]
+    implicit val ioEndpointChecker      = new TestEndpointChecker[IO]
+    val req                             =
+      Request[IO](Method.POST, uri"/register").withEntity(json"""{"url": "blah", "email": "someone@dbpedia.org"}""")
+    val test                            = for {
+      res  <- new Service[IO].routes.orNotFound.run(req)
+      _    <- IO(assertEquals(res.status, Status.BadRequest))
+      _    <- IO(assertEquals(res.httpVersion, HttpVersion.`HTTP/1.1`))
+      body <- res.as[Json]
+    } yield assertEquals(body, Error.MalformedRegistrationRequest.asJson)
+    test.unsafeRunSync()
+  }
+
+  test("invalid email") {
+    implicit val ioRepository           = new TestEndpointRepository[IO]
+    implicit val ioRegistrationProducer = new TestRegistrationProducer[IO]
+    implicit val ioEndpointChecker      = new TestEndpointChecker[IO]
+    val req                             = Request[IO](Method.POST, uri"/register")
+      .withEntity(json"""{"url": "http://dbpedia.org", "email": "blah"}""")
+    val test                            = for {
+      res  <- new Service[IO].routes.orNotFound.run(req)
+      _    <- IO(assertEquals(res.status, Status.BadRequest))
+      _    <- IO(assertEquals(res.httpVersion, HttpVersion.`HTTP/1.1`))
+      body <- res.as[Json]
+    } yield assertEquals(body, Error.MalformedRegistrationRequest.asJson)
+    test.unsafeRunSync()
+  }
+
   test("endpoint check failed") {
     implicit val ioRepository           = new TestEndpointRepository[IO]
     implicit val ioRegistrationProducer = new TestRegistrationProducer[IO]

@@ -54,7 +54,8 @@ lazy val model = (project in file("model"))
       "io.circe"        %% "circe-generic" % "0.13.0",
       "io.circe"        %% "circe-parser"  % "0.13.0",
       "com.github.fd4s" %% "fs2-kafka"     % "1.0.0",
-      "org.tpolecat"    %% "doobie-core"   % "0.8.8"
+      "org.tpolecat"    %% "doobie-core"   % "0.8.8",
+      "com.sun.mail"     % "javax.mail"    % "1.6.2"
     )
   )
 

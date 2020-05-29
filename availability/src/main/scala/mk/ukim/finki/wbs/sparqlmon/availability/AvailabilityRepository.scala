@@ -1,10 +1,12 @@
 package mk.ukim.finki.wbs.sparqlmon.availability
 
+import java.net.URL
+
 import mk.ukim.finki.wbs.sparqlmon.model._
 
 trait AvailabilityRepository[F[_]] {
-  def recordAvailability(ep: Endpoint, ar: AvailabilityRecord): F[Unit]
-  def availability(ep: Endpoint): F[Vector[AvailabilityRecord]]
+  def recordAvailability(url: URL, ar: AvailabilityRecord): F[Unit]
+  def availability(url: URL): F[Vector[AvailabilityRecord]]
 }
 
 object AvailabilityRepository {

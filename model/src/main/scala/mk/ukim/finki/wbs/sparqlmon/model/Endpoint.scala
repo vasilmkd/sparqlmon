@@ -1,16 +1,20 @@
 package mk.ukim.finki.wbs.sparqlmon.model
 
 import java.net.URL
+import javax.mail.internet.InternetAddress
 
 import cats.effect.Sync
 import fs2.kafka.{ Deserializer, Serializer }
+import io.circe.generic.auto._
+import io.circe.parser._
+import io.circe.syntax._
 
-final case class Endpoint(url: URL) extends AnyVal
+final case class Endpoint(url: URL, email: InternetAddress)
 
 object Endpoint {
   implicit def serializer[F[_]: Sync]: Serializer[F, Endpoint] =
-    Serializer[F, URL].contramap[Endpoint](_.url)
+    Serializer.string[F].contramap[Endpoint](_.asJson.toString)
 
   implicit def deserializer[F[_]: Sync]: Deserializer[F, Endpoint] =
-    Deserializer[F, URL].map(Endpoint(_))
+    Deserializer.string[F].map(decode[Endpoint](_).toOption.get)
 }
