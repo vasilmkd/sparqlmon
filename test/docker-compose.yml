@@ -3,7 +3,9 @@ services:
   postgres:
     image: postgres:12
     environment:
-      POSTGRES_PASSWORD: testpassword
+      POSTGRES_USER: sparqlmontest
+      POSTGRES_PASSWORD: sparqlmontestpassword
+      POSTGRES_DB: sparqlmontest
     volumes:
       - ../db:/docker-entrypoint-initdb.d
     ports:

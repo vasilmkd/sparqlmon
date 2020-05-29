@@ -21,9 +21,9 @@ class PostgresAvailabilityRepositorySuite extends FunSuite {
     .map { blocker =>
       Transactor.fromDriverManager[IO](
         "org.postgresql.Driver",
-        "jdbc:postgresql:postgres",
-        "postgres",
-        "testpassword",
+        "jdbc:postgresql:sparqlmontest",
+        "sparqlmontest",
+        "sparqlmontestpassword",
         blocker
       )
     }
