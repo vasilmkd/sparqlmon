@@ -6,6 +6,7 @@ SPARQL endpoint monitoring microservice system.
 
 ```
 ./build.sh
+export SPARQLMON_PASSWORD=<set database password>
 docker-compose up -d
 ```
 

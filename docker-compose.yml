@@ -3,7 +3,9 @@ services:
   postgres:
     image: postgres:12
     environment:
-      POSTGRES_PASSWORD: password
+      POSTGRES_USER: sparqlmon
+      POSTGRES_PASSWORD: ${SPARQLMON_PASSWORD}
+      POSTGRES_DB: sparqlmon
     volumes:
       - ./db:/docker-entrypoint-initdb.d
     restart: always
@@ -21,16 +23,22 @@ services:
     restart: always
   registration:
     image: sparqlmon/registration
+    environment:
+      SPARQLMON_PASSWORD: ${SPARQLMON_PASSWORD}
     ports:
       - 8080:8080
     restart: always
   availability:
     image: sparqlmon/availability
+    environment:
+      SPARQLMON_PASSWORD: ${SPARQLMON_PASSWORD}
     ports:
       - 8081:8080
     restart: always
   status:
     image: sparqlmon/status
+    environment:
+      SPARQLMON_PASSWORD: ${SPARQLMON_PASSWORD}
     ports:
       - 8082:8080
     restart: always

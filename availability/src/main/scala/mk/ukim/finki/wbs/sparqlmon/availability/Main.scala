@@ -3,7 +3,7 @@ package mk.ukim.finki.wbs.sparqlmon.availability
 import scala.concurrent.ExecutionContext
 import scala.concurrent.duration._
 
-import cats.effect.{ Blocker, ExitCode, IO, IOApp }
+import cats.effect.{ Blocker, ExitCode, IO, IOApp, Resource }
 import doobie.hikari.HikariTransactor
 import fs2.kafka._
 import org.http4s.client.blaze.BlazeClientBuilder
@@ -16,16 +16,17 @@ import mk.ukim.finki.wbs.sparqlmon.model._
 object Main extends IOApp {
 
   private val resource = for {
-    blocker <- Blocker[IO]
-    xa      <- HikariTransactor.newHikariTransactor[IO](
+    blocker  <- Blocker[IO]
+    password <- Resource.make(IO(System.getenv("SPARQLMON_PASSWORD")))(_ => IO.unit)
+    xa       <- HikariTransactor.newHikariTransactor[IO](
             "org.postgresql.Driver",
-            "jdbc:postgresql://postgres/postgres",
-            "postgres",
-            "password",
+            "jdbc:postgresql://postgres/sparqlmon",
+            "sparqlmon",
+            password,
             ExecutionContext.global,
             blocker
           )
-    client  <- BlazeClientBuilder[IO](ExecutionContext.global)
+    client   <- BlazeClientBuilder[IO](ExecutionContext.global)
                 .withRequestTimeout(1.minute)
                 .resource
   } yield (new PostgresAvailabilityRepository[IO](xa), client)
