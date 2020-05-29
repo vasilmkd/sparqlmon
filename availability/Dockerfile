@@ -1,4 +1,4 @@
-FROM openjdk:8-jre
-COPY target/universal/availability /availability
+FROM openjdk:8-jre-alpine
+COPY target/scala-2.13/availability.jar /availability.jar
 EXPOSE 8080
-ENTRYPOINT [ "/availability/bin/availability" ]
+ENTRYPOINT [ "java", "-jar", "availability.jar" ]

@@ -1,4 +1,4 @@
-FROM openjdk:8-jre
-COPY target/universal/status /status
+FROM openjdk:8-jre-alpine
+COPY target/scala-2.13/status.jar /status.jar
 EXPOSE 8080
-ENTRYPOINT [ "/status/bin/status" ]
+ENTRYPOINT [ "java", "-jar", "status.jar" ]

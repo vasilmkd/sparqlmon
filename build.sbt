@@ -49,6 +49,7 @@ lazy val root = (project in file("."))
 lazy val model = (project in file("model"))
   .settings(
     scalacOptions ++= compilerOptions,
+    test in assembly := {},
     libraryDependencies ++= Seq(
       "io.circe"        %% "circe-core"    % "0.13.0",
       "io.circe"        %% "circe-generic" % "0.13.0",
@@ -60,9 +61,9 @@ lazy val model = (project in file("model"))
   )
 
 lazy val registration = (project in file("registration"))
-  .enablePlugins(JavaAppPackaging)
   .settings(
     scalacOptions ++= compilerOptions,
+    test in assembly := {},
     addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.11.0" cross CrossVersion.full),
     libraryDependencies ++= Seq(
       "org.http4s"    %% "http4s-blaze-server" % "0.21.4",
@@ -80,9 +81,9 @@ lazy val registration = (project in file("registration"))
   .dependsOn(model)
 
 lazy val availability = (project in file("availability"))
-  .enablePlugins(JavaAppPackaging)
   .settings(
     scalacOptions ++= compilerOptions,
+    test in assembly := {},
     addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.11.0" cross CrossVersion.full),
     libraryDependencies ++= Seq(
       "org.http4s"    %% "http4s-blaze-server" % "0.21.4",
@@ -100,9 +101,9 @@ lazy val availability = (project in file("availability"))
   .dependsOn(model)
 
 lazy val status = (project in file("status"))
-  .enablePlugins(JavaAppPackaging)
   .settings(
     scalacOptions ++= compilerOptions,
+    test in assembly := {},
     addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.11.0" cross CrossVersion.full),
     libraryDependencies ++= Seq(
       "org.http4s"    %% "http4s-blaze-server" % "0.21.4",
@@ -118,5 +119,4 @@ lazy val status = (project in file("status"))
   .dependsOn(model)
 
 lazy val alerting = (project in file("alerting"))
-  .enablePlugins(JavaAppPackaging)
-  .settings(scalacOptions ++= compilerOptions)
+  .settings(scalacOptions ++= compilerOptions, test in assembly := {})

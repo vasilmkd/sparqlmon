@@ -1,4 +1,4 @@
-FROM openjdk:8-jre
-COPY target/universal/registration /registration
+FROM openjdk:8-jre-alpine
+COPY target/scala-2.13/registration.jar /registration.jar
 EXPOSE 8080
-ENTRYPOINT [ "/registration/bin/registration" ]
+ENTRYPOINT [ "java", "-jar", "registration.jar" ]

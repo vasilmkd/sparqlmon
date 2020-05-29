@@ -1,4 +1,4 @@
-FROM openjdk:8-jre
-COPY target/universal/alerting /alerting
+FROM openjdk:8-jre-alpine
+COPY target/scala-2.13/alerting.jar /alerting.jar
 EXPOSE 8080
-ENTRYPOINT [ "/alerting/bin/alerting" ]
+ENTRYPOINT [ "java", "-jar", "alerting.jar" ]

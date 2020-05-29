@@ -1,16 +1,14 @@
 #!/bin/bash
 
 function buildImage () {
-    cd ${1}/target/universal
-    unzip ${1}-*.zip
-    rm ${1}-*.zip
-    mv ${1}-* $1
+    cd ${1}/target/scala-2.13
+    mv ${1}-* ${1}.jar
     cd ../..
     docker build -t sparqlmon/${1} .
     cd ..
 }
 
-sbt clean universal:packageBin
+sbt clean assembly
 
 buildImage registration
 
