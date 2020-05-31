@@ -10,7 +10,7 @@ import org.http4s.{ HttpRoutes, Request }
 import org.http4s.circe._
 import org.http4s.dsl.Http4sDsl
 
-import mk.ukim.finki.wbs.sparqlmon.model._
+import mk.ukim.finki.wbs.sparqlmon.message._
 
 class Service[F[_]: Sync: EndpointChecker: EndpointRepository: RegistrationProducer] extends Http4sDsl[F] {
 

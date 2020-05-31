@@ -1,4 +1,4 @@
-package mk.ukim.finki.wbs.sparqlmon.model
+package mk.ukim.finki.wbs.sparqlmon.message
 
 import java.time.Instant
 

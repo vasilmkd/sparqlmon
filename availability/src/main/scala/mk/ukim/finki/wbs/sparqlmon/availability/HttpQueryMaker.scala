@@ -7,7 +7,7 @@ import org.http4s.{ Header, Method, Request, Uri }
 import org.http4s.circe._
 import org.http4s.client.Client
 
-import mk.ukim.finki.wbs.sparqlmon.model.Endpoint
+import mk.ukim.finki.wbs.sparqlmon.message.Endpoint
 
 class HttpQueryMaker[F[_]: Sync](client: Client[F]) extends QueryMaker[F] {
 

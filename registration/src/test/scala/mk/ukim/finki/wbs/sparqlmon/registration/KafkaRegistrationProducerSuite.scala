@@ -9,7 +9,7 @@ import cats.effect.IO
 import fs2.kafka._
 import munit.FunSuite
 
-import mk.ukim.finki.wbs.sparqlmon.model.Endpoint
+import mk.ukim.finki.wbs.sparqlmon.message.Endpoint
 
 class KafkaRegistrationProducerSuite extends FunSuite {
 

@@ -9,7 +9,7 @@ import doobie.implicits.javasql.TimestampMeta
 import doobie.util.meta.Meta
 import io.circe.{ Decoder, Encoder }
 
-package object model {
+package object message {
   implicit val urlEncoder: Encoder[URL] =
     Encoder.encodeString.contramap[URL](_.toString)
 

@@ -1,6 +1,6 @@
 package mk.ukim.finki.wbs.sparqlmon.availability
 
-import mk.ukim.finki.wbs.sparqlmon.model.EndpointAvailability
+import mk.ukim.finki.wbs.sparqlmon.message.EndpointAvailability
 
 trait AvailabilityProducer[F[_]] {
   def produceOne(ea: EndpointAvailability): F[Unit]

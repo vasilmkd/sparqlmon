@@ -1,6 +1,6 @@
 package mk.ukim.finki.wbs.sparqlmon.registration
 
-import mk.ukim.finki.wbs.sparqlmon.model.Endpoint
+import mk.ukim.finki.wbs.sparqlmon.message.Endpoint
 
 trait RegistrationProducer[F[_]] {
   def produceOne(ep: Endpoint): F[Unit]

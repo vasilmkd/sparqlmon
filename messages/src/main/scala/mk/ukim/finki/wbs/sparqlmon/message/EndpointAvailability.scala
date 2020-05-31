@@ -1,4 +1,4 @@
-package mk.ukim.finki.wbs.sparqlmon.model
+package mk.ukim.finki.wbs.sparqlmon.message
 
 import cats.effect.Sync
 import fs2.kafka.{ Deserializer, Serializer }

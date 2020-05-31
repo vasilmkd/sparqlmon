@@ -6,7 +6,7 @@ import javax.mail.internet._
 import cats.effect.Sync
 import cats.implicits._
 
-import mk.ukim.finki.wbs.sparqlmon.model.Endpoint
+import mk.ukim.finki.wbs.sparqlmon.message.Endpoint
 
 class EmailAlerter[F[_]: Sync] extends Alerter[F] {
   override def alert(ep: Endpoint): F[Unit] =

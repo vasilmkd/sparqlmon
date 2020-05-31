@@ -4,7 +4,7 @@ import cats.effect.{ ConcurrentEffect, ContextShift }
 import fs2.Stream
 import fs2.kafka._
 
-import mk.ukim.finki.wbs.sparqlmon.model.EndpointAvailability
+import mk.ukim.finki.wbs.sparqlmon.message.EndpointAvailability
 
 class KafkaAvailabilityProducer[F[_]: ConcurrentEffect: ContextShift](
   ps: ProducerSettings[F, String, EndpointAvailability]

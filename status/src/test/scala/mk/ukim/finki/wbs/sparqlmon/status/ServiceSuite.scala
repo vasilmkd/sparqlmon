@@ -9,7 +9,7 @@ import org.http4s.{ HttpVersion, Method, Request }
 import org.http4s.circe._
 import org.http4s.implicits._
 
-import mk.ukim.finki.wbs.sparqlmon.model._
+import mk.ukim.finki.wbs.sparqlmon.message._
 
 class ServiceSuite extends FunSuite {
 

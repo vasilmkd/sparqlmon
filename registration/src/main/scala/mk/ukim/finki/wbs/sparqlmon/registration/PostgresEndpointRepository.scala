@@ -14,7 +14,7 @@ import doobie.util.transactor.Transactor
 import fs2.Stream
 import org.postgresql.util.PSQLException
 
-import mk.ukim.finki.wbs.sparqlmon.model._
+import mk.ukim.finki.wbs.sparqlmon.message._
 
 class PostgresEndpointRepository[F[_]: Async: ContextShift: Timer](xa: Transactor[F]) extends EndpointRepository[F] {
 

@@ -6,7 +6,7 @@ import cats.effect.{ ExitCode, IO, IOApp }
 import cats.implicits._
 import fs2.kafka._
 
-import mk.ukim.finki.wbs.sparqlmon.model._
+import mk.ukim.finki.wbs.sparqlmon.message._
 
 object Main extends IOApp {
 

@@ -6,7 +6,7 @@ import javax.mail.internet.InternetAddress
 import cats.Applicative
 import fs2.Stream
 
-import mk.ukim.finki.wbs.sparqlmon.model.Endpoint
+import mk.ukim.finki.wbs.sparqlmon.message.Endpoint
 
 class TestEndpointRepository[F[_]: Applicative] extends EndpointRepository[F] {
   override def endpointsStream: Stream[F, Endpoint] =

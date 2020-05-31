@@ -4,7 +4,7 @@ import java.net.URL
 
 import cats.Applicative
 
-import mk.ukim.finki.wbs.sparqlmon.model._
+import mk.ukim.finki.wbs.sparqlmon.message._
 
 class TestStatusRepository[F[_]: Applicative] extends StatusRepository[F] {
   override def update(ea: EndpointAvailability): F[Unit]       =

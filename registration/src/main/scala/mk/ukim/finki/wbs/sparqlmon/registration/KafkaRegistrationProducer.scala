@@ -6,7 +6,7 @@ import cats.effect.{ ConcurrentEffect, ContextShift, Timer }
 import fs2.{ Pipe, Stream }
 import fs2.kafka._
 
-import mk.ukim.finki.wbs.sparqlmon.model.Endpoint
+import mk.ukim.finki.wbs.sparqlmon.message.Endpoint
 
 class KafkaRegistrationProducer[F[_]: ConcurrentEffect: ContextShift: Timer: EndpointRepository](
   ps: ProducerSettings[F, String, Endpoint]

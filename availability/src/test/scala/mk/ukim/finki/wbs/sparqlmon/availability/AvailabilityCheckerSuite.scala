@@ -10,7 +10,7 @@ import cats.effect.{ Clock, IO, Timer }
 import cats.implicits._
 import munit.FunSuite
 
-import mk.ukim.finki.wbs.sparqlmon.model._
+import mk.ukim.finki.wbs.sparqlmon.message._
 
 class AvailabilityCheckerSuite extends FunSuite {
 

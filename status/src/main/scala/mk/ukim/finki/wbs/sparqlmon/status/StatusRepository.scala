@@ -2,7 +2,7 @@ package mk.ukim.finki.wbs.sparqlmon.status
 
 import java.net.URL
 
-import mk.ukim.finki.wbs.sparqlmon.model._
+import mk.ukim.finki.wbs.sparqlmon.message._
 
 trait StatusRepository[F[_]] {
   def update(ea: EndpointAvailability): F[Unit]

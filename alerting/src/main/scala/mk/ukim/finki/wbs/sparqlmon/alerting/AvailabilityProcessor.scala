@@ -4,7 +4,7 @@ import cats.data.StateT
 import cats.effect.Sync
 import cats.implicits._
 
-import mk.ukim.finki.wbs.sparqlmon.model.EndpointAvailability
+import mk.ukim.finki.wbs.sparqlmon.message.EndpointAvailability
 
 object AvailabilityProcessor {
   def processEndpointAvailability[F[_]: Sync: Alerter](ea: EndpointAvailability): StateT[F, AlertingState, Unit] =

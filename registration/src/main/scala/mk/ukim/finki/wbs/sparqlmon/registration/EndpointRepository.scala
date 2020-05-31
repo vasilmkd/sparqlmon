@@ -2,7 +2,7 @@ package mk.ukim.finki.wbs.sparqlmon.registration
 
 import fs2.Stream
 
-import mk.ukim.finki.wbs.sparqlmon.model.Endpoint
+import mk.ukim.finki.wbs.sparqlmon.message.Endpoint
 
 trait EndpointRepository[F[_]] {
   def endpointsStream: Stream[F, Endpoint]

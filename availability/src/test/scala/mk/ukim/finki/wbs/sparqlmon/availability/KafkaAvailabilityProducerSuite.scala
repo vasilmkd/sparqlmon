@@ -10,7 +10,7 @@ import cats.effect.IO
 import fs2.kafka._
 import munit.FunSuite
 
-import mk.ukim.finki.wbs.sparqlmon.model._
+import mk.ukim.finki.wbs.sparqlmon.message._
 
 class KafkaAvailabilityProducerSuite extends FunSuite {
 

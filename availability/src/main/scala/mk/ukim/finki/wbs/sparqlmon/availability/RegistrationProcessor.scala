@@ -3,7 +3,7 @@ package mk.ukim.finki.wbs.sparqlmon.availability
 import cats.effect.{ Sync, Timer }
 import cats.implicits._
 
-import mk.ukim.finki.wbs.sparqlmon.model._
+import mk.ukim.finki.wbs.sparqlmon.message._
 
 object RegistrationProcessor {
 

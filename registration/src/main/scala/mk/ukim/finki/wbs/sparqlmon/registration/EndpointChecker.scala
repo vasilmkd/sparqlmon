@@ -1,6 +1,6 @@
 package mk.ukim.finki.wbs.sparqlmon.registration
 
-import mk.ukim.finki.wbs.sparqlmon.model.Endpoint
+import mk.ukim.finki.wbs.sparqlmon.message.Endpoint
 
 trait EndpointChecker[F[_]] {
   def check(ep: Endpoint): F[Either[Error, Unit]]

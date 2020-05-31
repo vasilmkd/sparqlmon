@@ -8,7 +8,7 @@ import cats.implicits._
 import doobie.implicits._
 import doobie.util.transactor.Transactor
 
-import mk.ukim.finki.wbs.sparqlmon.model._
+import mk.ukim.finki.wbs.sparqlmon.message._
 
 class PostgresStatusRepository[F[_]: Async](xa: Transactor[F]) extends StatusRepository[F] {
   override def update(ea: EndpointAvailability): F[Unit] =

@@ -7,7 +7,7 @@ import javax.mail.internet.InternetAddress
 import cats.effect.IO
 import munit.FunSuite
 
-import mk.ukim.finki.wbs.sparqlmon.model._
+import mk.ukim.finki.wbs.sparqlmon.message._
 
 class AvailabilityProcessorSuite extends FunSuite {
 

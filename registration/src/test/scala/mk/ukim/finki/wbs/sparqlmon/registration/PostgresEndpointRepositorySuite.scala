@@ -12,7 +12,7 @@ import doobie.implicits._
 import doobie.util.transactor.Transactor
 import munit.FunSuite
 
-import mk.ukim.finki.wbs.sparqlmon.model.Endpoint
+import mk.ukim.finki.wbs.sparqlmon.message.Endpoint
 
 class PostgresEndpointRepositorySuite extends FunSuite {
 

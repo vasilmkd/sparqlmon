@@ -44,9 +44,9 @@ val compilerOptions = Seq(
 )
 
 lazy val sparqlmon = (project in file("."))
-  .aggregate(model, registration, availability, status, alerting, gateway)
+  .aggregate(messages, registration, availability, status, alerting, gateway)
 
-lazy val model = (project in file("model"))
+lazy val messages = (project in file("messages"))
   .settings(
     scalacOptions ++= compilerOptions,
     test in assembly := {},
@@ -78,7 +78,7 @@ lazy val registration = (project in file("registration"))
     ),
     testFrameworks += new TestFramework("munit.Framework")
   )
-  .dependsOn(model)
+  .dependsOn(messages)
 
 lazy val availability = (project in file("availability"))
   .settings(
@@ -98,7 +98,7 @@ lazy val availability = (project in file("availability"))
     ),
     testFrameworks += new TestFramework("munit.Framework")
   )
-  .dependsOn(model)
+  .dependsOn(messages)
 
 lazy val status = (project in file("status"))
   .settings(
@@ -116,7 +116,7 @@ lazy val status = (project in file("status"))
     ),
     testFrameworks += new TestFramework("munit.Framework")
   )
-  .dependsOn(model)
+  .dependsOn(messages)
 
 lazy val alerting = (project in file("alerting"))
   .settings(
@@ -128,7 +128,7 @@ lazy val alerting = (project in file("alerting"))
     ),
     testFrameworks += new TestFramework("munit.Framework")
   )
-  .dependsOn(model)
+  .dependsOn(messages)
 
 lazy val gateway = (project in file("gateway"))
   .settings(
@@ -141,4 +141,4 @@ lazy val gateway = (project in file("gateway"))
       "org.slf4j"   % "slf4j-simple"        % "1.7.30"
     )
   )
-  .dependsOn(model)
+  .dependsOn(messages)
