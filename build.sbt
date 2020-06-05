@@ -74,7 +74,7 @@ lazy val registration = (project in file("registration"))
       "org.tpolecat"  %% "doobie-postgres"     % "0.8.8",
       "org.tpolecat"  %% "doobie-hikari"       % "0.8.8",
       "org.slf4j"      % "slf4j-simple"        % "1.7.30",
-      "org.scalameta" %% "munit"               % "0.7.7" % Test
+      "org.scalameta" %% "munit"               % "0.7.8" % Test
     ),
     testFrameworks += new TestFramework("munit.Framework")
   )
@@ -94,7 +94,7 @@ lazy val availability = (project in file("availability"))
       "org.tpolecat"  %% "doobie-postgres"     % "0.8.8",
       "org.tpolecat"  %% "doobie-hikari"       % "0.8.8",
       "org.slf4j"      % "slf4j-simple"        % "1.7.30",
-      "org.scalameta" %% "munit"               % "0.7.7" % Test
+      "org.scalameta" %% "munit"               % "0.7.8" % Test
     ),
     testFrameworks += new TestFramework("munit.Framework")
   )
@@ -112,7 +112,7 @@ lazy val status = (project in file("status"))
       "org.tpolecat"  %% "doobie-postgres"     % "0.8.8",
       "org.tpolecat"  %% "doobie-hikari"       % "0.8.8",
       "org.slf4j"      % "slf4j-simple"        % "1.7.30",
-      "org.scalameta" %% "munit"               % "0.7.7" % Test
+      "org.scalameta" %% "munit"               % "0.7.8" % Test
     ),
     testFrameworks += new TestFramework("munit.Framework")
   )
@@ -124,7 +124,7 @@ lazy val alerting = (project in file("alerting"))
     test in assembly := {},
     libraryDependencies ++= Seq(
       "org.slf4j"      % "slf4j-simple" % "1.7.30",
-      "org.scalameta" %% "munit"        % "0.7.7" % Test
+      "org.scalameta" %% "munit"        % "0.7.8" % Test
     ),
     testFrameworks += new TestFramework("munit.Framework")
   )
