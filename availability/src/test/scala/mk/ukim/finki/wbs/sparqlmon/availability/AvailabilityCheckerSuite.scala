@@ -14,7 +14,8 @@ import mk.ukim.finki.wbs.sparqlmon.message._
 
 class AvailabilityCheckerSuite extends FunSuite {
 
-  private val endpoint = Endpoint(new URL("http://dbpedia.org/sparql"), new InternetAddress("someone@dbpedia.org"))
+  private val endpoint =
+    Endpoint(new URL("http://dbpedia.org/sparql"), Some(new InternetAddress("someone@dbpedia.org")))
 
   implicit private val timer = new Timer[IO] {
     def clock: Clock[IO]                          =

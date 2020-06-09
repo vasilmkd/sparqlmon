@@ -21,11 +21,11 @@ class TestEndpointRepository[F[_]: Applicative] extends EndpointRepository[F] {
 
 object TestEndpointRepository {
   val testEndpoint: Endpoint =
-    Endpoint(new URL("http://dbpedia.org/sparql"), new InternetAddress("someone@dbpedia.org"))
+    Endpoint(new URL("http://dbpedia.org/sparql"), Some(new InternetAddress("someone@dbpedia.org")))
 
   val testEndpoints: Set[Endpoint] =
     Set(
       testEndpoint,
-      Endpoint(new URL("https://query.wikidata.org/sparql"), new InternetAddress("someone@wikidata.org"))
+      Endpoint(new URL("https://query.wikidata.org/sparql"), None)
     )
 }

@@ -13,7 +13,7 @@ class AvailabilityProcessorSuite extends FunSuite {
 
   implicit private val ioAlerter = new TestAlerter[IO]
 
-  private val endpoint = Endpoint(new URL("http://dbpedia.org"), new InternetAddress("someone@dbpedia.org"))
+  private val endpoint = Endpoint(new URL("http://dbpedia.org"), Some(new InternetAddress("someone@dbpedia.org")))
 
   private val up = EndpointAvailability(
     endpoint,

@@ -20,9 +20,9 @@ class PostgresEndpointRepository[F[_]: Async: ContextShift: Timer](xa: Transacto
 
   override def endpointsStream: Stream[F, Endpoint] =
     sql"select url, email from endpoint"
-      .query[(String, String)]
+      .query[(String, Option[String])]
       .stream
-      .map(t => Endpoint(new URL(t._1), new InternetAddress(t._2)))
+      .map(t => Endpoint(new URL(t._1), t._2.map(new InternetAddress(_))))
       .transact(xa)
 
   override def endpoints: F[Set[Endpoint]] =
@@ -32,8 +32,8 @@ class PostgresEndpointRepository[F[_]: Async: ContextShift: Timer](xa: Transacto
   override def register(ep: Endpoint): F[Either[Error, Unit]] =
     for {
       timestamp <- Timer[F].clock.realTime(MILLISECONDS)
-      res       <- sql"insert into endpoint (url, registered, email) values (${ep.url.toString}, ${Instant
-               .ofEpochMilli(timestamp)}, ${ep.email.toString})".update.run
+      res       <- sql"insert into endpoint (url, registered, email) values (${ep.url.show}, ${Instant
+               .ofEpochMilli(timestamp)}, ${ep.email.map(_.show)})".update.run
                .transact(xa)
                .as(Either.right[Error, Unit](()))
                .recoverWith {

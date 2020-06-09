@@ -13,14 +13,14 @@ import mk.ukim.finki.wbs.sparqlmon.message._
 class PostgresStatusRepository[F[_]: Async](xa: Transactor[F]) extends StatusRepository[F] {
   override def update(ea: EndpointAvailability): F[Unit] =
     sql"""insert into status (url, instant, up)
-          values (${ea.endpoint.url.toString}, ${ea.record.instant}, ${ea.record.up})
+          values (${ea.endpoint.url.show}, ${ea.record.instant}, ${ea.record.up})
           on conflict (url)
-          do update set instant = ${ea.record.instant}, up = ${ea.record.up} where status.url = ${ea.endpoint.url.toString}""".update.run
+          do update set instant = ${ea.record.instant}, up = ${ea.record.up} where status.url = ${ea.endpoint.url.show}""".update.run
       .transact(xa)
       .void
 
   override def status(url: URL): F[Option[AvailabilityRecord]] =
-    sql"select instant, up from status where url = ${url.toString}"
+    sql"select instant, up from status where url = ${url.show}"
       .query[(Instant, Boolean)]
       .stream
       .map(t => AvailabilityRecord(t._1, t._2))

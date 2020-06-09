@@ -49,7 +49,7 @@ class Service[F[_]: Sync: EndpointChecker: EndpointRepository: RegistrationProdu
           _ => Applicative[F].pure(Left(Error.MalformedRegistrationRequest)),
           ep =>
             Sync[F]
-              .delay(ep.email.validate())
+              .delay(ep.email.fold(())(_.validate()))
               .as(ep)
               .redeem(
                 _ => Error.MalformedRegistrationRequest.asLeft[Endpoint],

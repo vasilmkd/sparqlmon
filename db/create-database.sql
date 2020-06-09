@@ -1,7 +1,7 @@
 create table endpoint (
     url text not null,
     registered timestamp not null,
-    email text not null,
+    email text,
     primary key (url)
 );
 

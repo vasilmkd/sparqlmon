@@ -7,7 +7,7 @@ import org.http4s.{ Header, Method, Request, Uri }
 import org.http4s.circe._
 import org.http4s.client.Client
 
-import mk.ukim.finki.wbs.sparqlmon.message.Endpoint
+import mk.ukim.finki.wbs.sparqlmon.message._
 
 class HttpQueryMaker[F[_]: Sync](client: Client[F]) extends QueryMaker[F] {
 
@@ -16,7 +16,7 @@ class HttpQueryMaker[F[_]: Sync](client: Client[F]) extends QueryMaker[F] {
   private val format      = "application/sparql-results+json"
 
   override def ask(ep: Endpoint): OptionT[F, Unit] = {
-    val uri = Uri.unsafeFromString(ep.url.toString).withQueryParam("query", askQuery)
+    val uri = Uri.unsafeFromString(ep.url.show).withQueryParam("query", askQuery)
     val req = Request[F](Method.GET, uri).putHeaders(Header("Accept", format))
     OptionT(
       client
@@ -26,7 +26,7 @@ class HttpQueryMaker[F[_]: Sync](client: Client[F]) extends QueryMaker[F] {
   }
 
   override def select(ep: Endpoint): OptionT[F, Unit] = {
-    val uri = Uri.unsafeFromString(ep.url.toString).withQueryParam("query", selectQuery)
+    val uri = Uri.unsafeFromString(ep.url.show).withQueryParam("query", selectQuery)
     val req = Request[F](Method.GET, uri).putHeaders(Header("Accept", format))
     OptionT(
       client

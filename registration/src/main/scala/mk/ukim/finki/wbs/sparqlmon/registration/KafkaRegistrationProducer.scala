@@ -3,10 +3,11 @@ package mk.ukim.finki.wbs.sparqlmon.registration
 import scala.concurrent.duration._
 
 import cats.effect.{ ConcurrentEffect, ContextShift, Timer }
+import cats.implicits._
 import fs2.{ Pipe, Stream }
 import fs2.kafka._
 
-import mk.ukim.finki.wbs.sparqlmon.message.Endpoint
+import mk.ukim.finki.wbs.sparqlmon.message._
 
 class KafkaRegistrationProducer[F[_]: ConcurrentEffect: ContextShift: Timer: EndpointRepository](
   ps: ProducerSettings[F, String, Endpoint]
@@ -20,7 +21,7 @@ class KafkaRegistrationProducer[F[_]: ConcurrentEffect: ContextShift: Timer: End
   private def produceStream(stream: Stream[F, Endpoint]): F[Unit] =
     stream
       .map { ep =>
-        ProducerRecords.one(ProducerRecord("registration", ep.url.toString, ep))
+        ProducerRecords.one(ProducerRecord("registration", ep.url.show, ep))
       }
       .through(produce(ps))
       .compile

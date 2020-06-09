@@ -1,10 +1,11 @@
 package mk.ukim.finki.wbs.sparqlmon.availability
 
 import cats.effect.{ ConcurrentEffect, ContextShift }
+import cats.implicits._
 import fs2.Stream
 import fs2.kafka._
 
-import mk.ukim.finki.wbs.sparqlmon.message.EndpointAvailability
+import mk.ukim.finki.wbs.sparqlmon.message._
 
 class KafkaAvailabilityProducer[F[_]: ConcurrentEffect: ContextShift](
   ps: ProducerSettings[F, String, EndpointAvailability]
@@ -13,7 +14,7 @@ class KafkaAvailabilityProducer[F[_]: ConcurrentEffect: ContextShift](
     Stream
       .emit(ea)
       .map { ea =>
-        ProducerRecords.one(ProducerRecord("availability", ea.endpoint.url.toString, ea))
+        ProducerRecords.one(ProducerRecord("availability", ea.endpoint.url.show, ea))
       }
       .through(produce(ps))
       .compile

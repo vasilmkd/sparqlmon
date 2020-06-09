@@ -6,7 +6,7 @@ import org.http4s.{ Header, Method, Request, Uri }
 import org.http4s.circe._
 import org.http4s.client.Client
 
-import mk.ukim.finki.wbs.sparqlmon.message.Endpoint
+import mk.ukim.finki.wbs.sparqlmon.message._
 
 class HttpEndpointChecker[F[_]: Sync](client: Client[F]) extends EndpointChecker[F] {
 
@@ -14,7 +14,7 @@ class HttpEndpointChecker[F[_]: Sync](client: Client[F]) extends EndpointChecker
   private val format = "application/sparql-results+json"
 
   override def check(ep: Endpoint): F[Either[Error, Unit]] = {
-    val uri = Uri.unsafeFromString(ep.url.toString).withQueryParam("query", query)
+    val uri = Uri.unsafeFromString(ep.url.show).withQueryParam("query", query)
     val req = Request[F](Method.GET, uri).putHeaders(Header("Accept", format))
     client
       .fetch(req)(ResponseChecker.checkResponse(_))

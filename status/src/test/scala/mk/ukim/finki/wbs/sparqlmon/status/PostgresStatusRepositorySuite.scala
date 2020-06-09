@@ -40,7 +40,7 @@ class PostgresStatusRepositorySuite extends FunSuite {
 
   test("insert and read test") {
     val expected = EndpointAvailability(
-      Endpoint(new URL("http://dbpedia.org/sparql"), new InternetAddress("someone@dbpedia.org")),
+      Endpoint(new URL("http://dbpedia.org/sparql"), Some(new InternetAddress("someone@dbpedia.org"))),
       AvailabilityRecord(
         Instant.ofEpochMilli(1),
         true

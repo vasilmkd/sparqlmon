@@ -30,7 +30,7 @@ class KafkaRegistrationProducerSuite extends FunSuite {
     .withGroupId("testregistration")
 
   test("produceOne") {
-    val expected = Endpoint(new URL("http://dbpedia.org/sparql"), new InternetAddress("someone@dbpedia.org"))
+    val expected = Endpoint(new URL("http://dbpedia.org/sparql"), Some(new InternetAddress("someone@dbpedia.org")))
     val test     = for {
       _        <- rp.produceOne(expected)
       endpoint <- consumerStream(cs)

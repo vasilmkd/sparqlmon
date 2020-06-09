@@ -13,12 +13,12 @@ import mk.ukim.finki.wbs.sparqlmon.message._
 class PostgresAvailabilityRepository[F[_]: Async](xa: Transactor[F]) extends AvailabilityRepository[F] {
 
   override def recordAvailability(url: URL, ar: AvailabilityRecord): F[Unit] =
-    sql"insert into availability (url, instant, up) values (${url.toString}, ${ar.instant.toString} :: timestamp, ${ar.up})".update.run
+    sql"insert into availability (url, instant, up) values (${url.show}, ${ar.instant.show} :: timestamp, ${ar.up})".update.run
       .transact(xa)
       .void
 
   override def availability(url: URL): F[Vector[AvailabilityRecord]] =
-    sql"select instant, up from availability where url = ${url.toString}"
+    sql"select instant, up from availability where url = ${url.show}"
       .query[(Instant, Boolean)]
       .stream
       .map(t => AvailabilityRecord(t._1, t._2))

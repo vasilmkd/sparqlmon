@@ -43,8 +43,8 @@ class PostgresEndpointRepositorySuite extends FunSuite {
 
   test("insert and read test") {
     val expected = Set(
-      Endpoint(new URL("http://dbpedia.org/sparql"), new InternetAddress("someone@dbpedia.org")),
-      Endpoint(new URL("https://query.wikidata.org/sparql"), new InternetAddress("someone@wikidata.org"))
+      Endpoint(new URL("http://dbpedia.org/sparql"), Some(new InternetAddress("someone@dbpedia.org"))),
+      Endpoint(new URL("https://query.wikidata.org/sparql"), Some(new InternetAddress("someone@wikidata.org")))
     )
 
     val test = repo.use { repo =>
@@ -58,7 +58,7 @@ class PostgresEndpointRepositorySuite extends FunSuite {
 
   test("insert duplicate") {
     val url  = new URL("http://dbpedia.org/sparql")
-    val test = repo.use(_.register(Endpoint(url, new InternetAddress("someone@dbpedia.org"))))
+    val test = repo.use(_.register(Endpoint(url, Some(new InternetAddress("someone@dbpedia.org")))))
     assertEquals(test.unsafeRunSync(), Left(Error.EndpointAlreadyRegistered(url)))
   }
 }

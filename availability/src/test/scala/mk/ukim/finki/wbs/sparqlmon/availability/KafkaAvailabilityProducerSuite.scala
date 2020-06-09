@@ -31,7 +31,7 @@ class KafkaAvailabilityProducerSuite extends FunSuite {
   test("produceOne") {
     val expected =
       EndpointAvailability(
-        Endpoint(new URL("http://dbpedia.org/sparql"), new InternetAddress("someone@dbpedia.org")),
+        Endpoint(new URL("http://dbpedia.org/sparql"), Some(new InternetAddress("someone@dbpedia.org"))),
         AvailabilityRecord(Instant.EPOCH, true)
       )
     val test     = for {

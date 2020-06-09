@@ -3,6 +3,7 @@ package mk.ukim.finki.wbs.sparqlmon.availability
 import java.net.URL
 
 import cats.effect.IO
+import cats.implicits._
 import io.circe.generic.auto._
 import munit.FunSuite
 import org.http4s.{ HttpVersion, Method, Request, Status }
@@ -21,7 +22,7 @@ class ServiceSuite extends FunSuite {
   test("availability") {
     val url      = new URL("http://dbpedia.org/sparql")
     val expected = Availability(url, Vector.empty)
-    val req      = Request[IO](Method.GET, uri"/availability".withQueryParam("url", url.toString))
+    val req      = Request[IO](Method.GET, uri"/availability".withQueryParam("url", url.show))
     val test     = for {
       res  <- new Service[IO].routes.orNotFound.run(req)
       _    <- IO(assertEquals(res.status, Status.Ok))
