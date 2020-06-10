@@ -1,6 +1,6 @@
 ThisBuild / name := "sparqlmon"
 ThisBuild / organization := "mk.ukim.finki.wbs.sparqlmon"
-ThisBuild / version := "0.0.1-SNAPSHOT"
+ThisBuild / version := "1.0"
 ThisBuild / scalaVersion := "2.13.2"
 
 val compilerOptions = Seq(
