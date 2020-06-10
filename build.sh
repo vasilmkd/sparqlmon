@@ -14,3 +14,6 @@ buildImage availability
 buildImage status
 buildImage alerting
 buildImage gateway
+
+cd frontend/
+docker build -t sparqlmon/frontend .

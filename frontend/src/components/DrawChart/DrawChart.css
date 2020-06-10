@@ -1,0 +1,30 @@
+.green {
+    fill: #409040;
+}
+
+.red {
+    fill: #bb3b3b;
+}
+
+.ct-label {
+    font-size: 1em;
+    color: black;
+    fill: black;
+}
+
+text.ct-label:nth-child(n) {
+    font-size: 1.3em;
+}
+
+/*.ct-chart-line {*/
+/*    margin: 50px;*/
+/*    width: 1500px;*/
+/*}*/
+
+/*.ct-vertical {*/
+/*    width: 100px;*/
+/*}*/
+
+/*.ct-labels {*/
+/*    margin: 10px;*/
+/*}*/
