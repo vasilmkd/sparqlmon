@@ -43,8 +43,6 @@ services:
     restart: always
   gateway:
     image: sparqlmon/gateway
-    ports:
-      - 8080:8080
     restart: always
   frontend:
     image: sparqlmon/frontend
