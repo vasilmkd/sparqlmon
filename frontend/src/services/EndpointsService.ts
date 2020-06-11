@@ -7,23 +7,23 @@ import EndpointStatus from "../models/EndpointStatus";
 class EndpointsService {
 
     static getAllEndpoints(): Promise<AxiosResponse<SimpleEndpoint[]>> {
-        return axios_instance.get(`api/endpoints`);
+        return axios_instance.get(`endpoints`);
     }
 
     static registerEndpoint(endpointURL: { url: string, email?: string }) {
-        return axios_instance.post(`api/register`, endpointURL)
+        return axios_instance.post(`register`, endpointURL)
     }
 
     static getEndpoint(url: string): Promise<AxiosResponse<Endpoint>> {
-        return axios_instance.get(`api/availability?url=${url}`)
+        return axios_instance.get(`availability?url=${url}`)
     }
 
     static getEndpointStatus(url: string): Promise<AxiosResponse<EndpointStatus>> {
-        return axios_instance.get(`api/status?url=${url}`)
+        return axios_instance.get(`status?url=${url}`)
     }
 
     static getOverviewStatus(): Promise<AxiosResponse<EndpointStatus[]>> {
-        return axios_instance.get(`api/status/overview`)
+        return axios_instance.get(`status/overview`)
     }
 }
 
