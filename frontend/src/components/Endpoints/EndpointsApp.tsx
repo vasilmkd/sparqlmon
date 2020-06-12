@@ -21,9 +21,8 @@ const EndpointsApp = () => {
         EndpointsService.getOverviewStatus().then(response => {
             const endpointsStatus = response.data;
             setEndpoints(endpointsStatus);
-            const upEndpoints = endpointsStatus.filter(e => e).length;
+            const upEndpoints = endpointsStatus.filter(e => e.status.up).length;
 
-            //TODO remove plus 2
             const downEndpoints = endpointsStatus.length - upEndpoints;
 
             const availabilityData: DrawData = {
