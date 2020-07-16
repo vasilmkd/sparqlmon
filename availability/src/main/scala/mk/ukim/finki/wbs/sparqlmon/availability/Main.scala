@@ -18,16 +18,16 @@ object Main extends IOApp {
     blocker  <- Blocker[IO]
     password <- Resource.make(IO(System.getenv("SPARQLMON_PASSWORD")))(_ => IO.unit)
     xa       <- HikariTransactor.newHikariTransactor[IO](
-            "org.postgresql.Driver",
-            "jdbc:postgresql://postgres/sparqlmon",
-            "sparqlmon",
-            password,
-            ExecutionContext.global,
-            blocker
-          )
+                  "org.postgresql.Driver",
+                  "jdbc:postgresql://postgres/sparqlmon",
+                  "sparqlmon",
+                  password,
+                  ExecutionContext.global,
+                  blocker
+                )
     client   <- BlazeClientBuilder[IO](ExecutionContext.global)
-                .withRequestTimeout(1.minute)
-                .resource
+                  .withRequestTimeout(1.minute)
+                  .resource
   } yield (new PostgresAvailabilityRepository[IO](xa), client)
 
   private val consumerSettings =
@@ -58,16 +58,16 @@ object Main extends IOApp {
           for {
             cpus <- IO(Runtime.getRuntime().availableProcessors())
             _    <- consumerStream(consumerSettings)
-                   .evalTap(_.subscribeTo("registration"))
-                   .flatMap(_.stream)
-                   .parEvalMap(cpus) { commitable =>
-                     RegistrationProcessor
-                       .processEndpoint[IO](commitable.record.value)
-                       .as(commitable.offset)
-                   }
-                   .through(commitBatchWithin(100, 15.seconds))
-                   .compile
-                   .drain
+                      .evalTap(_.subscribeTo("registration"))
+                      .flatMap(_.stream)
+                      .parEvalMap(cpus) { commitable =>
+                        RegistrationProcessor
+                          .processEndpoint[IO](commitable.record.value)
+                          .as(commitable.offset)
+                      }
+                      .through(commitBatchWithin(100, 15.seconds))
+                      .compile
+                      .drain
           } yield ()
       }
       .as(ExitCode.Success)

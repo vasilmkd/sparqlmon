@@ -33,12 +33,12 @@ class PostgresEndpointRepository[F[_]: Async: ContextShift: Timer](xa: Transacto
     for {
       timestamp <- Timer[F].clock.realTime(MILLISECONDS)
       res       <- sql"insert into endpoint (url, registered, email) values (${ep.url.show}, ${Instant
-               .ofEpochMilli(timestamp)}, ${ep.email.map(_.show)})".update.run
-               .transact(xa)
-               .as(Either.right[Error, Unit](()))
-               .recoverWith {
-                 case e: PSQLException if e.getMessage.contains("duplicate key value violates unique constraint") =>
-                   Applicative[F].pure(Either.left[Error, Unit](Error.EndpointAlreadyRegistered(ep.url)))
-               }
+                     .ofEpochMilli(timestamp)}, ${ep.email.map(_.show)})".update.run
+                     .transact(xa)
+                     .as(Either.right[Error, Unit](()))
+                     .recoverWith {
+                       case e: PSQLException if e.getMessage.contains("duplicate key value violates unique constraint") =>
+                         Applicative[F].pure(Either.left[Error, Unit](Error.EndpointAlreadyRegistered(ep.url)))
+                     }
     } yield res
 }

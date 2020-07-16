@@ -18,16 +18,16 @@ object Main extends IOApp {
     blocker  <- Blocker[IO]
     password <- Resource.make(IO(System.getenv("SPARQLMON_PASSWORD")))(_ => IO.unit)
     xa       <- HikariTransactor.newHikariTransactor[IO](
-            "org.postgresql.Driver",
-            "jdbc:postgresql://postgres/sparqlmon",
-            "sparqlmon",
-            password,
-            ExecutionContext.global,
-            blocker
-          )
+                  "org.postgresql.Driver",
+                  "jdbc:postgresql://postgres/sparqlmon",
+                  "sparqlmon",
+                  password,
+                  ExecutionContext.global,
+                  blocker
+                )
     client   <- BlazeClientBuilder[IO](ExecutionContext.global)
-                .withRequestTimeout(1.minute)
-                .resource
+                  .withRequestTimeout(1.minute)
+                  .resource
   } yield (new PostgresEndpointRepository[IO](xa), client)
 
   def run(args: List[String]): IO[ExitCode] =

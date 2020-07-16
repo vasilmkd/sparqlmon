@@ -5,7 +5,6 @@ import scala.concurrent.duration._
 import java.net.URL
 import javax.mail.internet.InternetAddress
 
-import cats.data.OptionT
 import cats.effect.{ Clock, IO, Timer }
 import cats.implicits._
 import munit.FunSuite
@@ -28,8 +27,8 @@ class AvailabilityCheckerSuite extends FunSuite {
 
   test("check availability down") {
     implicit val qm = new QueryMaker[IO] {
-      def ask(ep: Endpoint)    = OptionT.none[IO, Unit]
-      def select(ep: Endpoint) = OptionT.none[IO, Unit]
+      def ask(ep: Endpoint)    = IO.pure(None)
+      def select(ep: Endpoint) = IO.pure(None)
     }
     val test        = for {
       record <- AvailabilityChecker.checkAvailability[IO](endpoint)
@@ -40,8 +39,8 @@ class AvailabilityCheckerSuite extends FunSuite {
 
   test("check availability ask works") {
     implicit val qm = new QueryMaker[IO] {
-      def ask(ep: Endpoint)    = OptionT.some[IO](())
-      def select(ep: Endpoint) = OptionT.none[IO, Unit]
+      def ask(ep: Endpoint)    = IO.pure(Some(()))
+      def select(ep: Endpoint) = IO.pure(None)
     }
     val test        = for {
       record <- AvailabilityChecker.checkAvailability[IO](endpoint)
@@ -52,8 +51,8 @@ class AvailabilityCheckerSuite extends FunSuite {
 
   test("check availability select works") {
     implicit val qm = new QueryMaker[IO] {
-      def ask(ep: Endpoint)    = OptionT.none[IO, Unit]
-      def select(ep: Endpoint) = OptionT.some[IO](())
+      def ask(ep: Endpoint)    = IO.pure(None)
+      def select(ep: Endpoint) = IO.pure(Some(()))
     }
     val test        = for {
       record <- AvailabilityChecker.checkAvailability[IO](endpoint)

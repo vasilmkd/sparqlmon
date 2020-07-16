@@ -17,7 +17,8 @@ class HttpEndpointChecker[F[_]: Sync](client: Client[F]) extends EndpointChecker
     val uri = Uri.unsafeFromString(ep.url.show).withQueryParam("query", query)
     val req = Request[F](Method.GET, uri).putHeaders(Header("Accept", format))
     client
-      .fetch(req)(ResponseChecker.checkResponse(_))
+      .run(req)
+      .use(ResponseChecker.checkResponse(_))
       .handleError(_ => None)
       .map(Either.fromOption(_, Error.InvalidSparqlEndpoint(ep.url)))
   }

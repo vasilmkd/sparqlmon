@@ -1,7 +1,7 @@
 ThisBuild / name := "sparqlmon"
 ThisBuild / organization := "mk.ukim.finki.wbs.sparqlmon"
 ThisBuild / version := "1.0.0"
-ThisBuild / scalaVersion := "2.13.2"
+ThisBuild / scalaVersion := "2.13.3"
 
 val compilerOptions = Seq(
   "-deprecation",                  // Emit warning and location for usages of deprecated APIs.
@@ -23,7 +23,6 @@ val compilerOptions = Seq(
   "-Xlint:inaccessible",           // Warn about inaccessible types in method signatures.
   "-Xlint:infer-any",              // Warn when a type argument is inferred to be `Any`.
   "-Xlint:missing-interpolator",   // A string literal appears to be missing an interpolator id.
-  "-Xlint:nullary-override",       // Warn when non-nullary `def f()' overrides nullary `def f'.
   "-Xlint:nullary-unit",           // Warn when nullary methods return Unit.
   "-Xlint:option-implicit",        // Option.apply used implicit view.
   "-Xlint:package-object-classes", // Class or object defined in package object.
@@ -66,15 +65,15 @@ lazy val registration = (project in file("registration"))
     test in assembly := {},
     addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.11.0" cross CrossVersion.full),
     libraryDependencies ++= Seq(
-      "org.http4s"    %% "http4s-blaze-server" % "0.21.4",
-      "org.http4s"    %% "http4s-blaze-client" % "0.21.4",
-      "org.http4s"    %% "http4s-dsl"          % "0.21.4",
-      "org.http4s"    %% "http4s-circe"        % "0.21.4",
+      "org.http4s"    %% "http4s-blaze-server" % "0.21.6",
+      "org.http4s"    %% "http4s-blaze-client" % "0.21.6",
+      "org.http4s"    %% "http4s-dsl"          % "0.21.6",
+      "org.http4s"    %% "http4s-circe"        % "0.21.6",
       "io.circe"      %% "circe-literal"       % "0.13.0",
       "org.tpolecat"  %% "doobie-postgres"     % "0.8.8",
       "org.tpolecat"  %% "doobie-hikari"       % "0.8.8",
       "org.slf4j"      % "slf4j-simple"        % "1.7.30",
-      "org.scalameta" %% "munit"               % "0.7.8" % Test
+      "org.scalameta" %% "munit"               % "0.7.9" % Test
     ),
     testFrameworks += new TestFramework("munit.Framework")
   )
@@ -86,15 +85,15 @@ lazy val availability = (project in file("availability"))
     test in assembly := {},
     addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.11.0" cross CrossVersion.full),
     libraryDependencies ++= Seq(
-      "org.http4s"    %% "http4s-blaze-server" % "0.21.4",
-      "org.http4s"    %% "http4s-blaze-client" % "0.21.4",
-      "org.http4s"    %% "http4s-dsl"          % "0.21.4",
-      "org.http4s"    %% "http4s-circe"        % "0.21.4",
+      "org.http4s"    %% "http4s-blaze-server" % "0.21.6",
+      "org.http4s"    %% "http4s-blaze-client" % "0.21.6",
+      "org.http4s"    %% "http4s-dsl"          % "0.21.6",
+      "org.http4s"    %% "http4s-circe"        % "0.21.6",
       "io.circe"      %% "circe-literal"       % "0.13.0",
       "org.tpolecat"  %% "doobie-postgres"     % "0.8.8",
       "org.tpolecat"  %% "doobie-hikari"       % "0.8.8",
       "org.slf4j"      % "slf4j-simple"        % "1.7.30",
-      "org.scalameta" %% "munit"               % "0.7.8" % Test
+      "org.scalameta" %% "munit"               % "0.7.9" % Test
     ),
     testFrameworks += new TestFramework("munit.Framework")
   )
@@ -106,13 +105,13 @@ lazy val status = (project in file("status"))
     test in assembly := {},
     addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.11.0" cross CrossVersion.full),
     libraryDependencies ++= Seq(
-      "org.http4s"    %% "http4s-blaze-server" % "0.21.4",
-      "org.http4s"    %% "http4s-dsl"          % "0.21.4",
-      "org.http4s"    %% "http4s-circe"        % "0.21.4",
+      "org.http4s"    %% "http4s-blaze-server" % "0.21.6",
+      "org.http4s"    %% "http4s-dsl"          % "0.21.6",
+      "org.http4s"    %% "http4s-circe"        % "0.21.6",
       "org.tpolecat"  %% "doobie-postgres"     % "0.8.8",
       "org.tpolecat"  %% "doobie-hikari"       % "0.8.8",
       "org.slf4j"      % "slf4j-simple"        % "1.7.30",
-      "org.scalameta" %% "munit"               % "0.7.8" % Test
+      "org.scalameta" %% "munit"               % "0.7.9" % Test
     ),
     testFrameworks += new TestFramework("munit.Framework")
   )
@@ -124,7 +123,7 @@ lazy val alerting = (project in file("alerting"))
     test in assembly := {},
     libraryDependencies ++= Seq(
       "org.slf4j"      % "slf4j-simple" % "1.7.30",
-      "org.scalameta" %% "munit"        % "0.7.8" % Test
+      "org.scalameta" %% "munit"        % "0.7.9" % Test
     ),
     testFrameworks += new TestFramework("munit.Framework")
   )
@@ -135,9 +134,9 @@ lazy val gateway = (project in file("gateway"))
     scalacOptions ++= compilerOptions,
     test in assembly := {},
     libraryDependencies ++= Seq(
-      "org.http4s" %% "http4s-blaze-server" % "0.21.4",
-      "org.http4s" %% "http4s-blaze-client" % "0.21.4",
-      "org.http4s" %% "http4s-dsl"          % "0.21.4",
+      "org.http4s" %% "http4s-blaze-server" % "0.21.6",
+      "org.http4s" %% "http4s-blaze-client" % "0.21.6",
+      "org.http4s" %% "http4s-dsl"          % "0.21.6",
       "org.slf4j"   % "slf4j-simple"        % "1.7.30"
     )
   )

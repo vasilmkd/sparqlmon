@@ -1,12 +1,10 @@
 package mk.ukim.finki.wbs.sparqlmon.availability
 
-import cats.data.OptionT
-
 import mk.ukim.finki.wbs.sparqlmon.message.Endpoint
 
 trait QueryMaker[F[_]] {
-  def ask(ep: Endpoint): OptionT[F, Unit]
-  def select(ep: Endpoint): OptionT[F, Unit]
+  def ask(ep: Endpoint): F[Option[Unit]]
+  def select(ep: Endpoint): F[Option[Unit]]
 }
 
 object QueryMaker {

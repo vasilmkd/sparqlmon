@@ -49,12 +49,12 @@ class KafkaRegistrationProducerSuite extends FunSuite {
     val test     = for {
       fiber <- rp.produceRegistrations.start
       eps   <- consumerStream(cs)
-               .evalTap(_.subscribeTo("registration"))
-               .flatMap(_.stream)
-               .map(_.record.value)
-               .take(2)
-               .compile
-               .fold(Set.empty[Endpoint])(_ + _)
+                 .evalTap(_.subscribeTo("registration"))
+                 .flatMap(_.stream)
+                 .map(_.record.value)
+                 .take(2)
+                 .compile
+                 .fold(Set.empty[Endpoint])(_ + _)
       _     <- fiber.cancel
     } yield assertEquals(eps, expected)
     test.unsafeRunSync()
